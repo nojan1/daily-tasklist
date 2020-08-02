@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const taskRouter = require('./tasks');
+
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(express.static(__dirname + '/../dist'));
 // app.get('*', function (request, response) {
 //   response.sendFile(path.resolve(__dirname, 'index.html'));
 // });
+
+app.use('/tasks', taskRouter);
 
 app.listen(port);
 console.log("server started on port " + port);

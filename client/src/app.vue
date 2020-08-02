@@ -3,59 +3,9 @@
     <h1>Tasks for today</h1>
 
     <div class="task-list-container">
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
-      </div>
-      <div class="task-container">
-          <span>Clean the stuff</span>
-          <button class="complete-task-button" type="button">
-              Complete
-          </button>
+      <div class="task-container" v-for="task in tasks" :key="task.id">
+        <span>{{task.title}}</span>
+        <button class="complete-task-button" type="button" v-on:click="markDone(task)">&check;</button>
       </div>
     </div>
   </div>
@@ -66,35 +16,68 @@ export default {
   name: "App",
   data() {
     return {
-      message: "Using Parcel In A Vue.js App",
+      tasks: [],
     };
+  },
+  mounted() {
+    fetch("/tasks")
+      .then((x) => x.json())
+      .then((x) => (this.tasks = x));
+  },
+  methods: {
+    markDone(task) {
+      fetch(`/tasks/${task.id}`, {
+        method: "POST",
+      }).then((x) => {
+        this.tasks = this.tasks.filter((t) => t.id !== task.id);
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .container {
-  width: 600px;
+  max-width: 600px;
   margin: 50px auto;
-  text-align: center;
-}
 
-.task-list-container{
+  h1 {
+    text-align: center;
+  }
+
+  .task-list-container {
     .task-container {
-        width:100%;
-        text-align: left;
-        margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      width: 100%;
+      margin-bottom: 10px;
 
-        .complete-task-button {
-            background: none;
-            float: right;
-        }
+      span {
+        display: block;
+        flex-grow: 1;
+      }
 
-        &:after {
-            display:block;
-            content:'';
-            clear:both;
+      .complete-task-button {
+        background: none;
+        height: 40px;
+        width: 50px;
+        font-size: 25px;
+
+        &:hover,
+        &:active {
+          color: gray;
+          cursor: pointer;
         }
+      }
+
+      &:after {
+        display: block;
+        content: "";
+        clear: both;
+      }
     }
+  }
 }
 </style>
