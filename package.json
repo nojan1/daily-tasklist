@@ -1,0 +1,33 @@
+{
+  "name": "daily-tasklist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"parcel watch client/index.html\" \"nodemon server/index.js\"",
+    "build": "parcel build client/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nojan1/daily-tasklist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nojan1/daily-tasklist/issues"
+  },
+  "homepage": "https://github.com/nojan1/daily-tasklist#readme",
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "parcel-bundler": "^1.12.4",
+    "vue": "^2.6.11",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
