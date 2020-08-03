@@ -3,7 +3,7 @@
     <h1>Tasks for today</h1>
 
     <div class="task-list-container">
-      <div class="task-container" v-for="task in tasks" :key="task.id">
+      <div class="task-container" v-for="task in tasks" :key="task._id">
         <span>{{task.title}}</span>
         <button class="complete-task-button" type="button" v-on:click="markDone(task)">&check;</button>
       </div>
@@ -26,10 +26,10 @@ export default {
   },
   methods: {
     markDone(task) {
-      fetch(`/tasks/${task.id}`, {
+      fetch(`/tasks/${task._id}`, {
         method: "POST",
       }).then((x) => {
-        this.tasks = this.tasks.filter((t) => t.id !== task.id);
+        this.tasks = this.tasks.filter((t) => t._id !== task._id);
       });
     },
   },

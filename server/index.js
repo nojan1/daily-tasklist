@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
+const MongoClient = require('mongodb').MongoClient
 const taskRouter = require('./tasks');
 
+const connectionString = process.env.MONGO_CONNECTIONSTRING || 'mongodb://192.168.1.3:27017';
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -14,7 +16,14 @@ app.use(express.static(__dirname + '/../dist'));
 //   response.sendFile(path.resolve(__dirname, 'index.html'));
 // });
 
-app.use('/tasks', taskRouter);
+MongoClient.connect(connectionString, { useUnifiedTopology: true })
+    .then(client => {
+        console.log('Connected to Database');
+        const db = client.db('daily-tasks');
 
-app.listen(port);
-console.log("server started on port " + port);
+        app.use('/tasks', taskRouter(db));
+
+        app.listen(port);
+        console.log("server started on port " + port);
+    });
+
