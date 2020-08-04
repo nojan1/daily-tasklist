@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"parcel watch client/index.html\" \"nodemon server/index.js\"",
+    "start": "concurrently \"parcel watch client/index.html\" \"nodemon -r dotenv/config server/index.js\"",
     "build": "parcel build client/index.html"
   },
   "repository": {
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.2.0",
+    "dotenv": "^8.2.0",
     "sass": "^1.26.10",
     "vue-template-compiler": "^2.6.11"
   }

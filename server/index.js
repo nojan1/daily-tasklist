@@ -3,7 +3,7 @@ const path = require('path');
 const MongoClient = require('mongodb').MongoClient
 const taskRouter = require('./tasks');
 
-const connectionString = process.env.MONGO_CONNECTIONSTRING || 'mongodb://192.168.1.3:27017';
+const connectionString = process.env.MONGO_CONNECTIONSTRING;
 const port = process.env.PORT || 3000;
 const app = express();
 
