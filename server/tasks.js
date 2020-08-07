@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = (repo, wss) => {
-    async function updateWebsocketClients() {
+    async function updateWebsocketClients(triggeringClient) {
         const message = JSON.stringify({
             code: 'ok',
             type: 'update',

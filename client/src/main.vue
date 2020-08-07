@@ -28,6 +28,31 @@ export default {
     fetch("/tasks")
       .then((x) => x.json())
       .then((x) => (this.tasks = x));
+
+    var url = window.location.href
+    var arr = url.split("/");
+    const socket = new WebSocket(`ws://${arr[2]}`);
+    socket.onopen = (evt) => {
+      socket.send(JSON.stringify({
+        command: 'get'
+      }))
+    }
+
+    socket.onmessage = (evt) => {
+      const message = JSON.parse(evt.data);
+
+      if(message.type = 'update'){
+        const newTasks = this.tasks ? message.content.filter(x => !this.tasks.find(t => t._id === x._id)) : message.content;
+        const deletedTasks = this.tasks?.filter(x => !message.content.find(t => t._id === x._id)) ?? [];
+
+        deletedTasks.forEach(t => t.deleted = true);
+
+        this.tasks = [
+          ...(this.tasks ?? []),
+          ...newTasks
+        ];
+      }
+    }
   },
   methods: {
     markDone(task) {
