@@ -27,7 +27,7 @@ export default {
   mounted() {
     fetch("/tasks")
       .then((x) => x.json())
-      .then((x) => (this.tasks = x));
+      .then((x) => (this.tasks = x.tasks));
 
     var url = window.location.href
     var arr = url.split("/");

@@ -18,7 +18,11 @@ module.exports = (repo, wss) => {
     }
 
     router.get('/', async (_, res) => {
-        res.json(await repo.get());
+        const tasks = await repo.get();
+        res.json({
+            count: tasks.length,
+            tasks
+        });
     });
 
     router.post('/:taskId', async (req, res) => {
